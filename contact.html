@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONTACT | AMPLIFY PEANUTS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 固定ヘッダー -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="images/logo-black.png" alt="AMPLIFY PEANUTS">
+      </a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="members.html">MEMBERS</a></li>
+          <li><a href="news.html">NEWS</a></li>
+          <li><a href="#peanuts-cup">PEANUTS CUP</a></li>
+          <li><a href="partners.html">PARTNERS</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+      <!-- ハンバーガーボタン -->
+<button class="hamburger" id="hamburger" aria-label="メニューを開く">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+      <a href="https://amplify.base.ec/" class="btn-store">
+        <span>STORE</span>
+        <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/>
+        </svg>
+      </a>
+    </div>
+    <!-- スマホ用メニュー -->
+<div class="mobile-menu" id="mobileMenu">
+
+<nav class="mobile-nav">
+  <a href="about.html">ABOUT</a>
+  <a href="members.html">MEMBERS</a>
+  <a href="news.html">NEWS</a>
+  <a href="#peanuts-cup">PEANUTS CUP</a>
+  <a href="partners.html">PARTNERS</a>
+  <a href="contact.html">CONTACT</a>
+
+  <a href="https://amplify.base.ec/" class="mobile-store">
+    <span>STORE</span>
+    <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/>
+    </svg>
+  </a>
+</nav>
+
+</div>
+  </header>
+  <!-- メインコンテンツ -->
+  <main class="contact-main">
+    
+    <section class="about-hero-section">
+      <div class="section-title-wrap">
+        <span class="bg-text">CONTACT</span>
+        <h2 class="section-title">CONTACT</h2>
+      </div>
+    <!-- 注意書きテキスト -->
+    <div class="contact-description">
+      <p>スポンサー、チーム、選手に関するお問い合わせは下記フォームよりご連絡頂きますようお願い申し上げます。</p>
+      <p>いただいた内容によってはお時間を頂く場合、また、お答えできない場合がございます為、予めご了承の程よろしくお願い申し上げます。</p>
+      <p class="contact-note">※当窓口からの返答内容は、無断転載・引用を固くお断り致します。</p>
+    </div>
+
+    <!-- フォーム全体ラップ -->
+    <div class="contact-form-container">
+      
+      <!-- タブ切り替えボタン -->
+      <div class="contact-tabs">
+        <button type="button" class="tab-btn active" id="tab-personal" onclick="switchTab('personal')">個人</button>
+        <button type="button" class="tab-btn" id="tab-corporate" onclick="switchTab('corporate')">法人</button>
+      </div>
+
+      <!-- 問い合わせフォーム -->
+      <form id="contact-form" class="contact-form">
+        <input type="hidden" id="current_tab" value="personal">
+        
+        <!-- 【個人用フォーム項目】 -->
+        <div id="form-personal-fields" class="tab-content active">
+          <div class="form-group radio-group">
+            <label class="form-label">問い合わせ種別</label>
+            <div class="radio-options">
+              <label class="radio-item">
+                <input type="radio" name="category_personal" value="イベントについて" checked>
+                <span class="radio-custom"></span>
+                <span class="radio-text">イベントについて</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="category_personal" value="WEB・SNSについて">
+                <span class="radio-custom"></span>
+                <span class="radio-text">WEB・SNSについて</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="category_personal" value="グッズについて">
+                <span class="radio-custom"></span>
+                <span class="radio-text">グッズについて</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="category_personal" value="その他">
+                <span class="radio-custom"></span>
+                <span class="radio-text">その他</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="p-company">会社名 / 組織名</label>
+              <input type="text" id="p-company" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="p-name">氏名 <span class="required-badge">※必須</span></label>
+              <input type="text" id="p-name" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="p-email">メールアドレス <span class="required-badge">※必須</span></label>
+              <input type="email" id="p-email" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="p-tel">電話番号 <span class="required-badge">※必須</span></label>
+              <input type="tel" id="p-tel" class="form-input" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- 【法人用フォーム項目】 -->
+        <div id="form-corporate-fields" class="tab-content">
+          <div class="form-group radio-group">
+            <label class="form-label">問い合わせ種別</label>
+            <div class="radio-options">
+              <label class="radio-item">
+                <input type="radio" name="category_corporate" value="PR・コラボ・スポンサーなどのご依頼" checked>
+                <span class="radio-custom"></span>
+                <span class="radio-text">PR・コラボ・スポンサーなどのご依頼</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="category_corporate" value="取材・イベントについて">
+                <span class="radio-custom"></span>
+                <span class="radio-text">取材・イベントについて</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="category_corporate" value="著作権や肖像権など権利関係について">
+                <span class="radio-custom"></span>
+                <span class="radio-text">著作権や肖像権など権利関係について</span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="category_corporate" value="その他">
+                <span class="radio-custom"></span>
+                <span class="radio-text">その他</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="c-company">会社名 / 組織名</label>
+              <input type="text" id="c-company" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="c-name">氏名 <span class="required-badge">※必須</span></label>
+              <input type="text" id="c-name" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="c-email">メールアドレス <span class="required-badge">※必須</span></label>
+              <input type="email" id="c-email" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="c-url">WebサイトURL</label>
+              <input type="url" id="c-url" class="form-input">
+            </div>
+          </div>
+
+          <div class="form-row single">
+            <div class="form-group half-width">
+              <label class="form-label" for="c-tel">電話番号 <span class="required-badge">※必須</span></label>
+              <input type="tel" id="c-tel" class="form-input" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- 共通：お問い合わせ内容 -->
+        <div class="form-group margin-top-20">
+          <label class="form-label" for="message">お問い合わせ内容 <span class="required-badge">※必須</span></label>
+          <textarea id="message" class="form-textarea" rows="8" required></textarea>
+        </div>
+
+        <!-- プライバシーポリシー同意チェック -->
+        <div class="privacy-agreement">
+          <label class="checkbox-item">
+            <input type="checkbox" id="privacy-check" name="privacy" required>
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">
+              <a href="privacy.html" class="privacy-link">プライバシーポリシー</a>に同意の上、お問合せを送信します。
+            </span>
+          </label>
+        </div>
+
+        <!-- 送信確認ボタン -->
+        <div class="submit-wrap">
+          <button type="submit" class="submit-btn" id="submit-btn" disabled>
+            同意して入力内容を確認
+            <span class="btn-arrow">＞</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+<footer class="site-footer">
+  <div class="footer-inner-1144">
+    <nav class="footer-links">
+      <a href="contact.html">CONTACT US</a>
+      <a href="brand-guidelines.html">BRAND GUIDELINES</a>
+      <a href="privacy.html">PRIVACY POLICY</a>
+    </nav>
+    <p class="copyright">&copy; AMPLIFY PEANUTS , ALL RIGHT RESERVED.</p>
+  </div>
+</footer>
+
+<script>
+  function switchTab(type) {
+    const tabPersonal = document.getElementById('tab-personal');
+    const tabCorporate = document.getElementById('tab-corporate');
+    const formPersonal = document.getElementById('form-personal-fields');
+    const formCorporate = document.getElementById('form-corporate-fields');
+    const currentTabInput = document.getElementById('current_tab');
+
+    if (type === 'personal') {
+      tabPersonal.classList.add('active');
+      tabCorporate.classList.remove('active');
+      formPersonal.classList.add('active');
+      formCorporate.classList.remove('active');
+      currentTabInput.value = 'personal';
+
+      // 個人時に必須設定を変更
+      document.getElementById('p-name').setAttribute('required', 'true');
+      document.getElementById('p-email').setAttribute('required', 'true');
+      document.getElementById('p-tel').setAttribute('required', 'true');
+      document.getElementById('c-name').removeAttribute('required');
+      document.getElementById('c-email').removeAttribute('required');
+      document.getElementById('c-tel').removeAttribute('required');
+    } else {
+      tabCorporate.classList.add('active');
+      tabPersonal.classList.remove('active');
+      formCorporate.classList.add('active');
+      formPersonal.classList.remove('active');
+      currentTabInput.value = 'corporate';
+
+      // 法人時に必須設定を変更
+      document.getElementById('c-name').setAttribute('required', 'true');
+      document.getElementById('c-email').setAttribute('required', 'true');
+      document.getElementById('c-tel').setAttribute('required', 'true');
+      document.getElementById('p-name').removeAttribute('required');
+      document.getElementById('p-email').removeAttribute('required');
+      document.getElementById('p-tel').removeAttribute('required');
+    }
+  }
+
+  // 同意チェックボックスの連動
+  document.getElementById('privacy-check').addEventListener('change', function() {
+    const submitBtn = document.getElementById('submit-btn');
+    if (this.checked) {
+      submitBtn.removeAttribute('disabled');
+      submitBtn.classList.add('enabled');
+    } else {
+      submitBtn.setAttribute('disabled', 'true');
+      submitBtn.classList.remove('enabled');
+    }
+  });
+
+  // フォーム送信処理 (エラーが出ないよう安全に取得)
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const type = document.getElementById('current_tab').value;
+    let formData = { type: type };
+
+    if (type === 'personal') {
+      const checkedRadio = document.querySelector('input[name="category_personal"]:checked');
+      formData.category = checkedRadio ? checkedRadio.value : '';
+      formData.company = document.getElementById('p-company') ? document.getElementById('p-company').value : '';
+      formData.name = document.getElementById('p-name') ? document.getElementById('p-name').value : '';
+      formData.email = document.getElementById('p-email') ? document.getElementById('p-email').value : '';
+      formData.tel = document.getElementById('p-tel') ? document.getElementById('p-tel').value : '';
+      formData.url = '';
+    } else {
+      const checkedRadio = document.querySelector('input[name="category_corporate"]:checked');
+      formData.category = checkedRadio ? checkedRadio.value : '';
+      formData.company = document.getElementById('c-company') ? document.getElementById('c-company').value : '';
+      formData.name = document.getElementById('c-name') ? document.getElementById('c-name').value : '';
+      formData.email = document.getElementById('c-email') ? document.getElementById('c-email').value : '';
+      formData.url = document.getElementById('c-url') ? document.getElementById('c-url').value : '';
+      formData.tel = document.getElementById('c-tel') ? document.getElementById('c-tel').value : '';
+    }
+
+    formData.message = document.getElementById('message') ? document.getElementById('message').value : '';
+
+    // ローカルストレージにデータを保存
+    localStorage.setItem('contactData', JSON.stringify(formData));
+
+    // 確認画面へ移動
+    window.location.href = 'contact-confirm.html';
+  });
+</script>
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+  });
+
+  // メニューをクリックしたら閉じる
+  document.querySelectorAll('.mobile-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    });
+  });
+</script>
+</body>
+</html>

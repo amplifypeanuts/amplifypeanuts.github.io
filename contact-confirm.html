@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONTACT CONFIRM | Amplify PEANUTS</title>
+
+  <!-- Google Fonts: Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="contact-page">
+
+<!-- 固定ヘッダー -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="images/logo-black.png" alt="AMPLIFY PEANUTS">
+      </a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="members.html">MEMBERS</a></li>
+          <li><a href="news.html">NEWS</a></li>
+          <li><a href="#peanuts-cup">PEANUTS CUP</a></li>
+          <li><a href="partners.html">PARTNERS</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+      <!-- ハンバーガーボタン -->
+<button class="hamburger" id="hamburger" aria-label="メニューを開く">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+      <a href="https://amplify.base.ec/" class="btn-store">
+        <span>STORE</span>
+        <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/>
+        </svg>
+      </a>
+    </div>
+    <!-- スマホ用メニュー -->
+<div class="mobile-menu" id="mobileMenu">
+
+<nav class="mobile-nav">
+  <a href="about.html">ABOUT</a>
+  <a href="members.html">MEMBERS</a>
+  <a href="news.html">NEWS</a>
+  <a href="#peanuts-cup">PEANUTS CUP</a>
+  <a href="partners.html">PARTNERS</a>
+  <a href="contact.html">CONTACT</a>
+
+  <a href="https://amplify.base.ec/" class="mobile-store">
+    <span>STORE</span>
+    <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/>
+    </svg>
+  </a>
+</nav>
+
+</div>
+  </header>
+  <!-- メインコンテンツ -->
+  <main class="contact-main">
+    
+    <!-- タイトルエリア -->
+    <div class="contact-title-container">
+      <span class="contact-title-bg">CONTACT</span>
+      <h1 class="contact-title-fg">CONTACT</h1>
+    </div>
+
+    <!-- 注意書きテキスト -->
+    <div class="contact-description">
+      <p>スポンサー、チーム、選手に関するお問い合わせは下記フォームよりご連絡頂きますようお願い申し上げます。</p>
+      <p>いただいた内容によってはお時間を頂く場合、また、お答えできない場合がございます為、予めご了承の程よろしくお願い申し上げます。</p>
+      <p class="contact-note">※当窓口からの返答内容は、無断転載・引用を固くお断り致します。</p>
+    </div>
+
+    <!-- フォーム確認枠ラップ -->
+    <div class="contact-form-container">
+      
+      <!-- タブ表示 -->
+      <div class="contact-tabs confirm-tabs">
+        <div class="tab-btn" id="tab-personal-view">個人</div>
+        <div class="tab-btn" id="tab-corporate-view">法人</div>
+      </div>
+
+      <!-- 確認用フォーム (send.php へ送信) -->
+      <form action="send.php" method="post" id="confirm-form">
+        
+        <!-- 送信用 hidden フィールド -->
+        <input type="hidden" name="type" id="hidden-type">
+        <input type="hidden" name="category" id="hidden-category">
+        <input type="hidden" name="company" id="hidden-company">
+        <input type="hidden" name="name" id="hidden-name">
+        <input type="hidden" name="email" id="hidden-email">
+        <input type="hidden" name="url" id="hidden-url">
+        <input type="hidden" name="tel" id="hidden-tel">
+        <input type="hidden" name="message" id="hidden-message">
+
+        <!-- 問い合わせ種別 -->
+        <div class="form-group radio-group">
+          <label class="form-label">問い合わせ種別</label>
+          <div class="confirm-selected-value">
+            <span class="yellow-dot"></span>
+            <span id="confirm-category">-</span>
+          </div>
+        </div>
+
+        <!-- 2列レイアウト：会社名 / 氏名 -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">会社名 / 組織名</label>
+            <div class="confirm-box" id="confirm-company">-</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">氏名</label>
+            <div class="confirm-box" id="confirm-name">-</div>
+          </div>
+        </div>
+
+        <!-- 2列レイアウト：メールアドレス / WebサイトURL -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">メールアドレス</label>
+            <div class="confirm-box" id="confirm-email">-</div>
+          </div>
+          <div class="form-group" id="url-group">
+            <label class="form-label">WebサイトURL</label>
+            <div class="confirm-box" id="confirm-url">-</div>
+          </div>
+        </div>
+
+        <!-- 1列：電話番号 -->
+        <div class="form-row single">
+          <div class="form-group half-width">
+            <label class="form-label">電話番号</label>
+            <div class="confirm-box" id="confirm-tel">-</div>
+          </div>
+        </div>
+
+        <!-- 1列：お問い合わせ内容 -->
+        <div class="form-group margin-top-20">
+          <label class="form-label">お問い合わせ内容</label>
+          <div class="confirm-box confirm-textarea-box" id="confirm-message">-</div>
+        </div>
+
+        <!-- アクションボタンエリア（修正 / 送信） -->
+        <div class="confirm-actions">
+          <button type="button" class="btn-modify" onclick="history.back()">
+            <span class="btn-arrow-left">＜</span>
+            入力内容を修正
+          </button>
+
+          <button type="submit" class="btn-submit">
+            SUBMIT
+            <span class="btn-arrow-right">＞</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+<footer class="site-footer">
+  <div class="footer-inner-1144">
+    <nav class="footer-links">
+      <a href="contact.html">CONTACT US</a>
+      <a href="brand-guidelines.html">BRAND GUIDELINES</a>
+      <a href="privacy.html">PRIVACY POLICY</a>
+    </nav>
+    <p class="copyright">&copy; AMPLIFY PEANUTS , ALL RIGHT RESERVED.</p>
+  </div>
+</footer>
+
+  <!-- JS (LocalStorageからデータを読み込んで表示＆hiddenフィールドへ反映) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedData = localStorage.getItem('contactData');
+      if (!savedData) return;
+
+      const data = JSON.parse(savedData);
+
+      // タブの表示状態制御
+      if (data.type === 'personal') {
+        document.getElementById('tab-personal-view').classList.add('active');
+        document.getElementById('tab-corporate-view').classList.remove('active');
+        document.getElementById('url-group').style.display = 'none';
+      } else {
+        document.getElementById('tab-corporate-view').classList.add('active');
+        document.getElementById('tab-personal-view').classList.remove('active');
+        document.getElementById('url-group').style.display = 'block';
+      }
+
+      // 画面表示用のセット
+      document.getElementById('confirm-category').textContent = data.category || '-';
+      document.getElementById('confirm-company').textContent = data.company || '-';
+      document.getElementById('confirm-name').textContent = data.name || '-';
+      document.getElementById('confirm-email').textContent = data.email || '-';
+      document.getElementById('confirm-tel').textContent = data.tel || '-';
+      document.getElementById('confirm-url').textContent = data.url || '-';
+      document.getElementById('confirm-message').textContent = data.message || '-';
+
+      // PHP送信用の hidden フィールドへ値をセット
+      document.getElementById('hidden-type').value = data.type || '';
+      document.getElementById('hidden-category').value = data.category || '';
+      document.getElementById('hidden-company').value = data.company || '';
+      document.getElementById('hidden-name').value = data.name || '';
+      document.getElementById('hidden-email').value = data.email || '';
+      document.getElementById('hidden-url').value = data.url || '';
+      document.getElementById('hidden-tel').value = data.tel || '';
+      document.getElementById('hidden-message').value = data.message || '';
+    });
+  </script>
+  <script>
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+  });
+
+  // メニューをクリックしたら閉じる
+  document.querySelectorAll('.mobile-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    });
+  });
+</script>
+</body>
+</html>

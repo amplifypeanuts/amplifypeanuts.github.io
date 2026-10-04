@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEMBERS | AMPLIFY PEANUTS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 固定ヘッダー -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="images/logo-black.png" alt="AMPLIFY PEANUTS">
+      </a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="about.html">ABOUT</a></li>
+          <li><a href="members.html">MEMBERS</a></li>
+          <li><a href="news.html">NEWS</a></li>
+          <li><a href="#peanuts-cup">PEANUTS CUP</a></li>
+          <li><a href="partners.html">PARTNERS</a></li>
+          <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+      </nav>
+      <!-- ハンバーガーボタン -->
+<button class="hamburger" id="hamburger" aria-label="メニューを開く">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+      <a href="https://amplify.base.ec/" class="btn-store">
+        <span>STORE</span>
+        <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/>
+        </svg>
+      </a>
+    </div>
+    <!-- スマホ用メニュー -->
+<div class="mobile-menu" id="mobileMenu">
+
+<nav class="mobile-nav">
+  <a href="about.html">ABOUT</a>
+  <a href="members.html">MEMBERS</a>
+  <a href="news.html">NEWS</a>
+  <a href="#peanuts-cup">PEANUTS CUP</a>
+  <a href="partners.html">PARTNERS</a>
+  <a href="contact.html">CONTACT</a>
+
+  <a href="https://amplify.base.ec/" class="mobile-store">
+    <span>STORE</span>
+    <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h6v2c0 .55.45 1 1 1s1-.45 1-1V8h2v12z"/>
+    </svg>
+  </a>
+</nav>
+
+</div>
+  </header>
+
+<main class="members-page">
+    <section class="about-hero-section">
+      <div class="section-title-wrap">
+        <span class="bg-text">MEMBERS</span>
+        <h2 class="section-title">MEMBERS</h2>
+      </div>
+
+  <!-- フィルタータブ -->
+  <section class="filter-section">
+    <div class="filter-container">
+      <button class="filter-btn active" data-division="ALL">ALL</button>
+      <button class="filter-btn" data-division="VALORANT">VALORANT</button>
+      <button class="filter-btn" data-division="VALORANT AC">VALORANT AC</button>
+      <button class="filter-btn" data-division="VALORANT GC">VALORANT GC</button>
+      <button class="filter-btn" data-division="STREET FIGHTER">STREET FIGHTER</button>
+      <button class="filter-btn" data-division="CONTENT CREATER">CONTENT CREATER</button>
+      <button class="filter-btn" data-division="OPERATION">OPERATION</button>
+    </div>
+  </section>
+
+  <!-- ★ここにカードが自動挿入されます★ -->
+  <section class="members-grid-section">
+    <div class="members-grid" id="members-grid"></div>
+  </section>
+
+  <!-- ★ここにページネーションが自動挿入されます★ -->
+  <div class="pagination-section">
+    <div class="pagination" id="pagination"></div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner-1144">
+    <nav class="footer-links">
+      <a href="contact.html">CONTACT US</a>
+      <a href="brand-guidelines.html">BRAND GUIDELINES</a>
+      <a href="privacy.html">PRIVACY POLICY</a>
+    </nav>
+    <p class="copyright">&copy; AMPLIFY PEANUTS , ALL RIGHT RESERVED.</p>
+  </div>
+</footer>
+
+  <!-- メンバー管理スクリプト読み込み -->
+<script src="members.js"></script>
+<script>
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+  });
+
+  // メニューをクリックしたら閉じる
+  document.querySelectorAll('.mobile-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    });
+  });
+</script>
+</body>
+</html>

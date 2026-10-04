@@ -1,0 +1,5148 @@
+/* ==========================================
+   1. オリジナルフォント読み込み
+   ========================================== */
+@font-face {
+  font-family: 'SexFace';
+  src: url("fonts/Sex Face.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ==========================================
+   2. リセット・ベース設定
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'SexFace', sans-serif;
+  background-color: #212121;  /* ★基本の背景色を #212121 に設定 */
+  color: #FFFFFF;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ==========================================
+   3. 固定ヘッダー (1920px * 85px)
+   ========================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85px;
+  background-color: #E4E600;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.header-inner {
+  width: 100%;
+  padding: 0 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: 165px;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.nav-menu ul {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.nav-menu a {
+  font-family: 'SexFace', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.1em;
+  color: #000000;
+  line-height: 1;
+  transition: opacity 0.2s;
+}
+
+.nav-menu a:hover {
+  opacity: 0.6;
+}
+
+.btn-store {
+  margin-left: auto;
+  width: 183px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #212121;
+  color: #E4E600;
+  border-radius: 6px;
+  font-family: 'SexFace', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  transition: background-color 0.2s;
+}
+
+.btn-store:hover {
+  background-color: #000000;
+}
+
+.store-icon {
+  width: 18px;
+  height: 18px;
+  fill: #E4E600;
+}
+
+/* ==========================================
+   4. メインビジュアルエリア（1920px * 740px）
+   ========================================== */
+/* =========================================
+   FIRST VIEW
+========================================= */
+
+.main-visual {
+  width: 100%;
+  height: 100vh;
+  min-height: 500px;
+  background: #E4E600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.main-visual img {
+  width: min(55vw, 650px);
+  height: auto;
+  display: block;
+}
+
+/* ==========================================
+   5. セクション共通（NEWS / ABOUT）
+   ========================================== */
+.section-container {
+  padding: 0 0 100px;           /* 左右パディングは1920px基準のインナー等で制御するため0に */
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+/* NEWSセクション全体（FVからの余白調整） */
+#news {
+  padding-top: 0;
+}
+
+/* 重なりタイトルデザイン */
+.section-title-wrap {
+  position: relative;
+  text-align: center;
+  margin-top: 200px;             /* 前の要素（FVやMOREボタン）からタイトルまで：正確に200px */
+  margin-bottom: 100px;          /* タイトルからコンテンツ（NEWSカードやABOUTロゴ）まで：100px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 背面の薄いアウトライン文字（200px / 10% / 不透明度20%） ★#aboutを外して共通化！ */
+.bg-text {
+  position: absolute;
+  font-family: 'SexFace', sans-serif;
+  font-size: 200px;                             /* ★200px */
+  letter-spacing: 0.10em;                       /* ★文字間隔 10% */
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(228, 230, 0, 0.2); /* ★イエロー不透明度 20% */
+  user-select: none;
+  z-index: 1;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* 前面のメイン文字（80px / 10% / イエロー塗りつぶし・細線補正） */
+.section-title {
+  position: relative;
+  font-family: 'SexFace', sans-serif;
+  font-size: 80px;                              /* Figma指定：80px */
+  font-weight: normal;                          /* 太字化を確実に防ぐ */
+  letter-spacing: 0.10em;                       /* 文字間隔 10% */
+  color: #E4E600;                               /* イエロー */
+  z-index: 2;
+  line-height: 1;
+
+  /* ★ブラウザでのフォント太さ・にじみ補正（Figmaの表示に近づける） */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+/* ==========================================
+   6. NEWSカード（サイズ：516px * 367px / 間隔：横111px 縦72px）
+   ========================================== */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 516px);  /* 幅 516px の 2列配置 */
+  justify-content: center;                   /* 全体を中央寄せ */
+  column-gap: 111px;                         /* ★Figma指定：横の間隔 111px */
+  row-gap: 72px;                             /* ★Figma指定：縦の間隔 72px */
+  margin-bottom: 50px;
+}
+
+.news-card {
+  width: 516px;
+  height: 367px;
+  border: 2px solid #E4E600;
+  background-color: #FFFFFF;
+  border-radius: 0;                          /* ★角丸を解除して直角に */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 画像表示エリア（ロゴ・サムネイル部分） */
+.card-image {
+  width: 100%;
+  height: 280px;                             /* ★Figma指定：高さ 280px */
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid #E4E600;          /* 区切り線 */
+  flex-shrink: 0;
+}
+
+.card-image img {
+  max-height: 120px;                         /* logo-news.pngのサイズ調整 */
+  width: auto;
+  object-fit: contain;
+}
+
+/* カード下部のテキストコンテンツエリア */
+.card-content {
+  width: 100%;
+  height: 87px;                              /* 残りの高さ (367px - 280px) */
+  background-color: #FFFFFF;
+  padding: 15px;
+}
+/* ==========================================
+   7. ABOUTセクション
+   ========================================== */
+#about {
+  margin-top: 0;                 /* ★二重にかかっていたマージンを解除（section-title-wrapのmargin-top: 200pxに一本化） */
+}
+
+.about-content {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+
+.about-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px; /* ロゴから文章までの距離 */
+}
+
+.about-logo img {
+  /* ★背面の「ABOUT」(200px / letter-spacing 10%) の実際の表示幅と合わせる */
+  width: 780px;      /* ※Figma上の実際の幅(px)に合わせて数値を微調整してください */
+  height: auto;
+  display: block;
+}
+
+/* ==========================================
+   ABOUTセクション テキストスタイル
+   ========================================== */
+.about-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 18px;            /* サイズ: 18px */
+  font-weight: 700;           /* 太さ: Bold (700) */
+  line-height: 30px;          /* 行間: 30px */
+  letter-spacing: 0.2em;      /* 文字間隔: 20% (0.2em) */
+  color: #FFFFFF;
+  text-align: center;
+}
+
+/* ==========================================
+   8. MOREボタン（342px * 72px）
+   ========================================== */
+.btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-more {
+  width: 342px;
+  height: 72px;
+  background-color: #E4E600;
+  color: #000000;
+  font-family: 'SexFace', sans-serif;
+  font-size: 24px;
+  font-weight: normal;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 24px;
+  border-radius: 0;                          /* ★角丸を解除して直角に */
+  transition: transform 0.2s, opacity 0.2s;
+  box-sizing: border-box;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.btn-more:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* 「MORE」文字を完全中央に */
+.btn-more span {
+  width: 100%;
+  text-align: center;
+}
+
+/* ★Figma指定：右矢印アイコン（W: 6px / H: 14px） */
+.btn-more .arrow-icon {
+  position: absolute;
+  right: 24px;                               /* 右端からの配置距離 */
+  top: 50%;
+  transform: translateY(-50%);               /* 垂直中央揃え */
+  width: 6px;                                /* ★幅 6px */
+  height: 14px;                              /* ★高さ 14px */
+  object-fit: contain;
+}
+
+
+/* ==========================================
+   ABOUT ページ専用スタイル
+   ========================================== */
+.about-page {
+  padding-top: 85px;             /* ヘッダー固定分の高さ空け */
+}
+
+/* ------------------------------------------
+   1. ABOUT メインメッセージカード
+   ------------------------------------------ */
+.about-hero-section {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 130px;
+}
+
+/* ABOUTタイトル領域（上下余白の厳格固定） */
+.about-hero-section .section-title-wrap {
+  margin-top: 100px;             /* ★ヘッダー下端からタイトル領域上端まで：100px */
+  margin-bottom: 100px;          /* ★タイトル領域下端から白カードまで：100px */
+  height: 200px;                 /* 背面文字(200px)の高さに合わせてエリアを固定 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* メインメッセージ白枠カード（1144px × 566px） */
+.about-card {
+  width: 1144px;                 /* ★幅：1144px */
+  height: 566px;                 /* ★高さ：566px */
+  margin: 0 auto;
+  background-color: #FFFFFF;
+  border: 3px solid #E4E600;     /* イエロー枠 */
+  border-radius: 0;              /* 直角指定 */
+  padding: 50px 60px;            /* カード内側のパディング */
+  color: #000000;
+  box-sizing: border-box;
+}
+
+.about-card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 上下均等配置で566pxにピッタリ収める */
+}
+
+.about-card-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;               /* 566px高さに最適なテキストサイズ */
+  font-weight: 500;
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+.about-card-text.highlight {
+  font-weight: 700;
+}
+
+/* 署名部分 */
+.about-signature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;         /* 右寄せ */
+  margin-top: 10px;
+}
+
+.signature-pic {
+  height: 50px;                  /* サインの高さ */
+  width: auto;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.signature-name {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+}
+
+/* ==========================================
+   2. MANAGEMENT TEAM セクション専用CSS
+   ========================================== */
+.management-section {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 130px;
+}
+
+.management-title-wrap {
+  margin-top: 100px;             /* 上部からの余白 */
+  margin-bottom: 60px;           /* タイトルからカードまでの余白 */
+  text-align: center;
+}
+
+.management-title {
+  font-family: 'SexFace', sans-serif;
+  font-size: 80px;
+  font-weight: normal;
+  color: #E4E600;                 /* イエロー */
+  letter-spacing: 0.2em;          /* 文字間隔 20% */
+  line-height: 1;
+  margin: 0;
+}
+
+/* 2列横並びコンテナ */
+.management-members-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;                     /* カード同士の間隔 */
+  max-width: 1144px;             /* メッセージカード幅と統一 */
+  margin: 0 auto;
+}
+
+/* 各メンバーのカード（縦構成） */
+.management-member-card {
+  width: 552px;                  /* 2列用サイズ (1144px - 40px) / 2 */
+  display: flex;
+  flex-direction: column;
+  background-color: transparent; /* カード背景は透明（黒背景に乗せる） */
+}
+
+/* 上部：写真枠 */
+.management-photo-wrap {
+  width: 100%;
+  height: 380px;                 /* 参考画像の縦長アスペクト比 */
+  background-color: #000000;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.management-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;             /* 画像サイズにフィット */
+  display: block;
+}
+
+/* 下部：情報・本文エリア */
+.management-info-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ヘッダー行（名前ブロック ＋ SNSアイコン） */
+.management-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 25px;
+}
+
+.management-name-block {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 役職 (CEO / COO) */
+.management-role {
+  font-family: 'SexFace', sans-serif;
+  font-size: 18px;
+  letter-spacing: 20%;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+/* 英語表記氏名 */
+.management-name-en {
+  font-family: 'SexFace', sans-serif;
+  font-size: 26px;
+  letter-spacing: 20%;
+  font-weight: normal;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin: 0 0 4px 0;
+}
+
+/* 日本語表記氏名 */
+.management-name-jp {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #AAAAAA;                /* グレー表示 */
+  margin:20px 0 0 0;
+  line-height: 1;
+}
+
+/* SNSアイコン */
+.management-sns-icon {
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #FFFFFF;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-bottom: 4px;
+}
+
+.management-sns-icon:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+/* 本文（バイオグラフィー） */
+.management-bio {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 20%;
+  color: #ffffff;                 /* 薄いグレーテキスト */
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+/* ------------------------------------------
+   3. WHY YACHIMATA? セクション
+   ------------------------------------------ */
+.why-yachimata-section {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 130px;
+}
+
+.why-yachimata-title-wrap {
+  margin-top: 100px;             /* 前のセクションから 100px */
+  text-align: center;
+}
+
+.why-yachimata-title {
+  font-family: 'SexFace', sans-serif;
+  font-size: 80px;
+  font-weight: normal;
+  color: #E4E600;                 /* イエロー */
+  letter-spacing: 0.2em;          /* 文字間隔 20% */
+  line-height: 1;
+  margin: 0 0 60px 0;            /* タイトルからサブコピーまで 60px */
+}
+
+.why-yachimata-sub {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 43px;             /* 行間 43px */
+  letter-spacing: 0.2em;          /* 文字間隔 20% */
+  margin: 0;
+}
+
+/* サブコピーから 60px 下の画像配置エリア */
+.why-yachimata-graphic {
+  margin-top: 60px;              /* ★サブコピーから 60px 下 */
+  margin-bottom: 60px;           /* 下の本文まで 60px */
+  text-align: center;
+}
+
+.why-graphic-img {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.why-yachimata-content {
+  max-width: 1144px;             /* 幅 1144px */
+  margin: 0 auto;
+}
+
+.why-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2;
+  letter-spacing: 0.2em;          /* 文字間隔 20% */
+  color: #FFFFFF;
+}
+
+/* WHY YACHIMATA? 3連カード */
+.why-cards-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;                     /* ブロック間: 20px */
+  width: 1144px;                 /* 368px*3 + 20px*2 = 1144px */
+  margin-top: 100px;             /* ★黄色の図解下部から 3連カード上部まで 100px */
+  margin-right: auto;
+  margin-bottom: 0;
+  margin-left: auto;
+}
+
+.why-card {
+  width: 368px;                  /* ブロック幅: 368px */
+  height: 356px;                 /* ブロック高さ: 356px */
+  background-color: #FFFFFF;     /* 白背景 */
+  padding: 24px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3連カードヘッダー構造 */
+.why-card-header {
+  border-bottom: 1px solid #000000;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.why-card-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;                     /* 数字・縦線・英語テキストの間隔 */
+}
+
+.why-card-num,
+.why-card-label {
+  font-family: 'SexFace', sans-serif;
+  font-size: 48px;
+  font-weight: normal;
+  color: #000000;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+/* 数字とテキストの間の縦線 */
+.why-card-label-wrap .divider {
+  display: inline-block;
+  width: 2px;
+  height: 32px;
+  background-color: #000000;
+}
+
+/* 日本語タイトル */
+.why-card-title {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 32px;
+  font-weight: 900;              /* Noto Sans JP Black */
+  color: #000000;
+  letter-spacing: 0;
+  line-height: 1.2;
+  margin: 8px 0 0 0;
+}
+
+/* 本文 */
+.why-card-text {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.2em;          /* 文字間隔 20% */
+  color: #000000;
+  margin: 0;
+  word-break: break-all;
+}
+
+/* ------------------------------------------
+   4. VISION セクション
+   ------------------------------------------ */
+.vision-section {
+  max-width: 1920px;
+  margin-top: 100px;             /* 前のセクションから 100px */
+  margin-bottom: 100px;          /* ★VISIONカード下部から次のセクションまで 100px */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 130px;
+}
+
+.vision-title-wrap {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1144px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vision-line {
+  flex: 1;
+  height: 2px;
+  background-color: #E4E600;     /* イエロー */
+}
+
+/* 外枠フレーム（幅1144px） */
+.vision-box {
+  position: relative;
+  width: 1144px;                 /* 1144px 幅 */
+  margin: 0 auto;
+  border: 2px solid #E4E600;     /* 全体を囲む黄色い枠線 */
+  padding: 100px 40px 80px 40px; /* タグの高さを考慮した内側余白 */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* 上辺中央に跨がる VISION タグ */
+.vision-tag {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 中央配置 ＆ 上枠線を跨ぐ */
+  background-color: #212121;     /* 背景色（黒）で枠線を遮断 */
+  border: 1px solid #E4E600;     /* VISIONタグの黄色枠 */
+  color: #E4E600;                 /* イエロー */
+  font-family: 'SexFace', sans-serif;
+  font-size: 80px;               /* ★80px */
+  font-weight: normal;
+  letter-spacing: 0.1em;         /* ★文字間隔 10% */
+  line-height: 1;
+  padding: 8px 32px;
+  white-space: nowrap;
+}
+
+/* メインキャッチコピー */
+.vision-catch {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 48px;               /* ★48px */
+  font-weight: 900;              /* Noto Sans JP Black */
+  color: #E4E600;                 /* イエロー */
+  line-height: 80px;             /* ★行間 80px */
+  letter-spacing: 0.2em;         /* ★文字間隔 20% */
+  margin: 0;
+}
+
+/* ------------------------------------------
+   5. TEAM セクション（白背景エリア）
+   ------------------------------------------ */
+.team-section {
+  width: 100%;
+  background-color: #FFFFFF;     /* 全幅 白背景 */
+  box-sizing: border-box;
+  padding-top: 70px;             /* 上から TEAM タイトルまで 70px */
+  padding-bottom: 70px;          /* 下部の白背景余白 */
+  margin-bottom: 0 !important;   /* 下部マージンを強制的に0 */
+}
+
+.team-container {
+  width: 1144px;                 /* 1144px 幅 */
+  margin: 0 auto;
+}
+
+/* TEAM タイトル */
+.team-title {
+  font-family: 'SexFace', sans-serif;
+  font-size: 80px;
+  font-weight: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  margin: 0 0 60px 0;
+}
+
+/* 2カラムレイアウト */
+.team-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 150px;                    /* ロゴとテキストの間隔 150px */
+}
+
+/* 左側：ロゴエリア (500px * 500px) */
+.team-logo-block {
+  width: 500px;
+  height: 500px;
+  background-color: #E4E600;     /* イエロー背景 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 50px;
+  flex-shrink: 0;
+}
+
+.team-logo-img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* 右側：会社概要テーブル */
+.team-info-list {
+  flex: 1;
+  margin: 0;
+}
+
+/* 項目間の区切り線 */
+.team-info-row {
+  display: flex;
+  padding: 35px 0;
+  border-bottom: 1px solid #000000;
+}
+
+.team-info-row:last-child {
+  border-bottom: none;
+}
+
+.team-info-row dt {
+  width: 140px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: #000000;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.team-info-row dd {
+  flex: 1;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #000000;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* 公式Xアカウントへのリンク */
+.team-link {
+  color: #000000;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.team-link:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+
+/* ------------------------------------------
+   フッター調整
+   ------------------------------------------ */
+footer, .footer {
+  display: block;
+  margin-top: 0 !important;      /* フッター上部の隙間を強制打ち消し */
+  padding-top: 0;
+}
+
+/* ==========================================
+   MEMBERS ページ専用スタイル
+   ========================================== */
+.members-page {
+  background-color: #212121;     /* 暗いグレー背景 */
+  color: #FFFFFF;
+  padding-bottom: 100px;
+}
+
+
+
+
+/* ==========================================
+   2. カテゴリーフィルタータブ
+   ========================================== */
+.filter-section {
+  width: 1146px;                /* 181px × 6個 + 12px × 5 (横隙間) = 1146px */
+  margin: 0 auto 100px auto;     /* 中央寄せ＆フィルターからカードまでの下部余白 60px */
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;             /* 6個を超えたら折り返し */
+  justify-content: flex-start;  /* 2行目は左詰めで配置 */
+  gap: 12px;                    /* ★縦と横の隙間をともに 12px に設定 */
+}
+
+.filter-btn {
+  width: 181px;                 /* 幅 181px */
+  height: 62px;                 /* 高さ 62px */
+  box-sizing: border-box;
+  font-family: 'SexFace', sans-serif;
+  font-size: 18px;
+  background-color: #E4E600;    /* 通常：イエロー */
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: all 0.2s ease;
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.filter-btn:hover {
+  opacity: 0.85;
+}
+
+/* アクティブ（選択中） */
+.filter-btn.active {
+  background-color: #000000;    /* 黒背景 */
+  color: #E4E600;               /* 白文字 */
+}
+
+/* ==========================================
+   3. メンバーカードグリッド
+   ========================================== */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 547px);
+  gap: 38px 36px;
+  justify-content: center;
+}
+
+/* カード全体（背景は透明にして内側枠線のみ保持） */
+.member-card {
+  width: 547px;
+  height: 178px;
+  background-color: transparent; /* ★カード全体は透明に */
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 4px solid #E4E600;      /* 内側4px枠線 */
+}
+
+/* --- 左側（写真・ロゴエリア：完全透明） --- */
+.card-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 330px;
+  height: 100%;
+  background-color: transparent; /* ★透明 */
+  clip-path: polygon(0 0, 100% 0, 58% 100%, 0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 60px;
+  box-sizing: border-box;
+  z-index: 2;                   /* 右側イエロー背景の上 */
+}
+
+/* 1. デフォルトロゴ（logo-members.png） */
+.card-left img.card-logo {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 2. 宣材写真（isPhoto: true） */
+.card-left img.card-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- 右側（イエロー背景＋テキストエリア） --- */
+.card-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #E4E600;     /* ★右側（イエロー部分）にのみ背景色を付ける */
+  /* 左側の斜め切り抜きに合わせた逆向きの切り抜き指定 */
+  clip-path: polygon(100% 0, 330px 0, 191.4px 100%, 100% 100%); 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding-right: 40px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* 右上のピンマーク */
+.card-pin {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 20px;
+  height: 20px;
+  background: url('images/logo-icon-black.svg') no-repeat center / contain;
+}
+
+/* テキスト情報 */
+.card-info {
+  text-align: right;
+}
+
+.member-name {
+  font-family: 'SexFace', sans-serif;
+  font-size: 36px;
+  color: #000000;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.1em;
+  line-height: 1;
+}
+
+.member-division {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: #212121;
+  letter-spacing: 0.2em;
+  margin: 0;
+  line-height: 1;
+}
+
+/* 4. ページネーション */
+.pagination-section {
+  width: 1144px;
+  margin: 60px auto 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-num, .page-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: #212121;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: 'SexFace', sans-serif;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.page-num:hover, .page-nav:hover {
+  background-color: #444444;
+}
+
+/* アクティブ（1ページ目） */
+.page-num.active {
+  background-color: #E4E600;
+  color: #000000;
+}
+
+.page-dots {
+  color: #FFFFFF;
+  padding: 0 8px;
+  font-family: 'SexFace', sans-serif;
+}
+
+/* ページネーションの無効状態 (disabled) */
+.page-nav.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================
+   CONTACT ページ専用スタイル
+   ========================================== */
+body.contact-page {
+  background-color: #212121;
+  color: #FFFFFF;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 80px 20px 120px;
+}
+
+/* --- タイトルデザイン --- */
+.contact-title-container {
+  margin-top: 100px;             /* ★ヘッダー下端からタイトル領域上端まで：100px */
+  margin-bottom: 100px;          /* ★タイトル領域下端から白カードまで：100px */
+  height: 200px;                 /* 背面文字(200px)の高さに合わせてエリアを固定 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.contact-title-bg {
+  position: absolute;
+  font-family: 'SexFace', sans-serif;
+  font-size: 200px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(228, 230, 0, 0.2);
+  letter-spacing: 0.15em;
+  user-select: none;
+  z-index: 1;
+}
+
+.contact-title-fg {
+  position: relative;
+  font-family: 'SexFace', sans-serif;
+  font-size: 80px;
+  color: #E4E600;
+  letter-spacing: 0.15em;
+  margin: 0;
+  z-index: 2;
+}
+
+/* --- 説明文 --- */
+.contact-description {
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #DDDDDD;
+  margin-bottom: 60px;
+}
+
+.contact-description p {
+  margin: 0 0 6px 0;
+}
+
+.contact-note {
+  color: #E4E600;
+  margin-top: 12px !important;
+}
+
+/* --- フォームコンテナ --- */
+.contact-form-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* --- タブ切り替え --- */
+.contact-tabs {
+  display: flex;
+  border-bottom: 1px solid #444444;
+  margin-bottom: 40px;
+}
+
+.tab-btn {
+  flex: 1;
+  background-color: transparent;
+  color: #FFFFFF;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 16px 0;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  background-color: #E4E600;
+  color: #000000;
+  border-bottom: 3px solid #E4E600;
+}
+
+/* タブコンテンツ非表示制御 */
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* --- フォーム要素 --- */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.margin-top-20 {
+  margin-top: 24px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+}
+
+/* ラジオボタンデザイン */
+.radio-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.radio-item {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #FFFFFF;
+  user-select: none;
+}
+
+.radio-item input[type="radio"] {
+  display: none;
+}
+
+.radio-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #E4E600;
+  border-radius: 50%;
+  margin-right: 8px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.radio-item input[type="radio"]:checked + .radio-custom::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #E4E600;
+  border-radius: 50%;
+}
+
+/* 入力インプット・テキストエリア */
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-row.single .half-width {
+  width: calc(50% - 10px);
+  flex: none;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  background-color: #1A1A1A;
+  border: 1px solid #E4E600;
+  color: #FFFFFF;
+  padding: 14px 16px;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  background-color: #222222;
+  box-shadow: 0 0 5px rgba(228, 230, 0, 0.4);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 180px;
+}
+
+/* --- プライバシー同意チェックボックス --- */
+.privacy-agreement {
+  text-align: center;
+  margin: 40px 0 30px;
+}
+
+.checkbox-item {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+.checkbox-item input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #E4E600;
+  margin-right: 10px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.checkbox-item input[type="checkbox"]:checked + .checkbox-custom::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #E4E600;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.privacy-link {
+  color: #E4E600;
+  text-decoration: underline;
+}
+
+/* --- 送信ボタン --- */
+.submit-wrap {
+  text-align: center;
+}
+
+.submit-btn {
+  width: 100%;
+  max-width: 480px;
+  height: 54px;
+  background-color: #555555;   /* 未同意時はグレーアウト */
+  color: #888888;
+  border: none;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: not-allowed;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* チェック時に有効化スタイル */
+.submit-btn.enabled {
+  background-color: #333333;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.submit-btn.enabled:hover {
+  background-color: #E4E600;
+  color: #000000;
+}
+
+.btn-arrow {
+  position: absolute;
+  right: 20px;
+  font-size: 14px;
+}
+
+/* --- 必須バッジのスタイル --- */
+.required-badge {
+  font-size: 11px;
+  color: #FF4D4D;             /* 視認性の良い赤色 */
+  margin-left: 6px;
+  font-weight: normal;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+
+
+/* --- 全体基本設定 --- */
+body.privacy-page {
+    background-color: #0f0f0f;
+    color: #cccccc;
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+
+
+/* --- メインコンテンツ --- */
+.privacy-main {
+    padding: 80px 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* タイトルと背景ウォーターマーク効果 */
+.page-title {
+    position: relative;
+    font-family: 'Teko', sans-serif;
+    font-size: 56px;
+    color: #E4E600;
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 2px;
+}
+
+.page-title::before {
+    content: attr(data-bg-title);
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 90px;
+    color: rgba(255, 255, 255, 0.03);
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ポリシーセクション文章表現 */
+.policy-intro {
+    margin-bottom: 50px;
+    
+}
+
+.policy-section {
+    margin-bottom: 50px;
+}
+
+.policy-section h2 {
+    color: #ffffff;
+    font-size: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.policy-section h3 {
+    color: #ffffff;
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 12px;
+}
+
+.policy-section p {
+    margin-bottom: 16px;
+}
+
+.policy-section ul, 
+.policy-section ol {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.policy-section li {
+    margin-bottom: 8px;
+}
+
+.policy-section ul ul {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+/* --- 幅1144pxのレイアウト＆タイトル中央配置設定 --- */
+
+/* メインコンテナ：幅1144px固定・左右中央揃え */
+.brand-container-1144 {
+  width: 100%;
+  max-width: 1144px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* タイトルエリア共通設定（中央配置） */
+.section-title-wrapper {
+  position: relative;
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+/* 前景タイトル（黄色・中央配置） */
+.fg-title {
+  font-family: 'SexFace', sans-serif; /* ← SexFaceを指定 */
+  font-size: 80px;
+  font-weight: 500;
+  color: #E4E600; /* ネオンイエロー */
+  margin: 0;
+  letter-spacing: 8px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: block;
+}
+
+
+/* 文章領域のレイアウト */
+.brand-intro {
+  text-align: left;
+  margin-bottom: 50px;
+  color: #cccccc;
+  line-height: 1.8;
+}
+
+.brand-section {
+  margin-bottom: 80px;
+}
+
+.section-body {
+  max-width: 800px; /* 本文部分は読みやすい幅にして中央に寄せる */
+  margin: 0 auto;
+}
+
+.section-body h3 {
+  color: #E4E600;
+  font-size: 16px;
+  margin-top: 28px;
+  margin-bottom: 10px;
+}
+
+.section-body p {
+  color: #cccccc;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+
+.note-text {
+  color: #888888 !important;
+  font-size: 12px !important;
+  margin-top: 12px;
+}
+
+/* 黄色ボタン（中央揃え） */
+.btn-center {
+  text-align: center;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.btn-yellow {
+  display: inline-block;
+  background-color: #E4E600;
+  color: #000000;
+  font-family: 'Teko', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 8px 36px;
+  text-decoration: none;
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+
+.btn-yellow:hover {
+  opacity: 0.85;
+}
+
+/* レスポンシブ（スマホ対応） */
+@media (max-width: 768px) {
+  .fg-title {
+    font-size: 36px;
+  }
+  .bg-text {
+    font-size: 50px;
+  }
+}
+
+@font-face {
+  font-family: 'SexFace';
+  src: url('fonts/SexFace.woff2') format('woff2'),
+       url('fonts/SexFace.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ==========================================
+   フッター完全修正CSS
+========================================== */
+
+/* フッター外枠（画面全体の黒背景） */
+footer, .site-footer {
+  width: 100% !important;
+  background-color: #000000 !important;
+  padding: 40px 0 !important;
+  box-sizing: border-box !important;
+  clear: both !important;
+}
+
+/* 1144pxインナーボックス（横幅固定・左右中央寄せ・左右振り分け） */
+.footer-inner,
+.footer-container,
+.footer-inner-1144 {
+  width: 100% !important;
+  max-width: 1144px !important;
+  margin: 0 auto !important; /* ← これで画面の中央に来ます */
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  flex-direction: row !important; /* 横並びを強制 */
+  justify-content: space-between !important; /* 左端と右端に振り分け */
+  align-items: center !important;
+}
+
+/* 左側：ナビゲーションリンク */
+.footer-nav,
+.footer-links {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.footer-nav a,
+.footer-links a {
+  font-family: 'SexFace', sans-serif !important;
+  font-size: 16px !important;
+  color: #E4E600 !important; /* ネオンイエロー */
+  text-decoration: none !important;
+  letter-spacing: 1.5px !important;
+  white-space: nowrap !important;
+}
+
+/* 右側：コピーライト */
+.copyright,
+.footer-copyright {
+  font-family: 'SexFace', sans-serif !important;
+  font-size: 16px !important;
+  color: #E4E600 !important; /* ネオンイエロー */
+  margin: 0 !important;
+  letter-spacing: 1.5px !important;
+  white-space: nowrap !important;
+  text-align: right !important;
+}
+
+.news-card {
+  font-family: 'Noto Sans JP', sans-serif;
+  width: 516px;
+  height: 367px;
+  border: 2px solid #E4E600;
+  background-color: #FFFFFF;
+  border-radius: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-date {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12px;
+  color: #666666;
+  font-weight: 500;
+}
+
+
+/* --- NEWSカードのリンク設定 --- */
+.news-card-link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* テキストコンテンツエリア (高さ 87px) */
+.card-content {
+  width: 100%;
+  height: 87px;
+  background-color: #FFFFFF;
+  padding: 10px 16px;
+  box-sizing: border-box;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 日付＆カテゴリータグエリア */
+.news-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.news-date {
+  font-size: 12px;
+  color: #666666;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+.news-category {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 10px;
+  background-color: #000000;
+  color: #E4E600;
+  padding: 2px 6px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+
+/* タイトルテキスト (2行で溢れた場合は「...」表示) */
+.news-title {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 60px;
+  margin-bottom: 100px; /* ★ボタン下からフッターまでに100pxの空間を確保 */
+}
+
+/* --- モーダル背景オーバーレイ --- */
+.news-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.news-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* モーダルコンテンツ本体 */
+.news-modal-content {
+  background-color: #000000;
+  border: 2px solid #E4E600;
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 40px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-family: 'Noto Sans JP', sans-serif;
+  box-shadow: 0 10px 30px rgba(228, 230, 0, 0.2);
+}
+
+/* 閉じるボタン */
+.news-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #E4E600;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.news-modal-close:hover {
+  transform: scale(1.2);
+}
+
+/* モーダル内部のレイアウト */
+.modal-image-wrap {
+  width: 100%;
+  height: 260px;
+  background-color: #ffffff;
+  border: 1px solid #E4E600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modal-image-wrap img {
+  max-height: 140px;
+  width: auto;
+  object-fit: contain;
+}
+
+.modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.modal-date {
+  font-size: 14px;
+  color: #aaaaaa;
+}
+
+.modal-category {
+  font-size: 11px;
+  background-color: #E4E600;
+  color: #000000;
+  padding: 2px 8px;
+  font-weight: 700;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 24px 0;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(228, 230, 0, 0.3);
+  padding-bottom: 16px;
+}
+
+.modal-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #dddddd;
+}
+
+.modal-text p {
+  margin-bottom: 16px;
+}
+
+/* カードにホバー時のカーソル */
+.news-card {
+  cursor: pointer;
+}
+
+/* ==========================================
+   PARTNERS ページ専用スタイル
+========================================== */
+
+body.partners-page {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.partners-main {
+  width: 100%;
+}
+
+.partners-container-1144 {
+  width: 100%;
+  max-width: 1144px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+
+
+/* --- 2. PARTNERS LOGO LIST (白背景エリア) --- */
+.partners-logos-section {
+  background-color: #FFFFFF;
+  padding: 100px 0 120px;
+  width: 100%;
+}
+
+/* 上段：5個配置 (大) */
+.partners-grid-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 70px;
+  flex-wrap: wrap;
+}
+
+.partner-item.large {
+  width: 170px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.partner-item.large img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* 下段：7個配置 (小) */
+.partners-grid-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.partner-item.small {
+  width: 110px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.partner-item.small img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.partner-item:hover {
+  transform: translateY(-4px);
+  opacity: 0.8;
+}
+
+/* --- 3. PARTNERSHIP (問い合わせエリア) --- */
+.partnership-cta-section {
+  background-color: #1a1a1a;
+  padding: 100px 0 120px;
+  text-align: center;
+}
+
+.cta-title {
+  font-family: 'SexFace', sans-serif;
+  font-size: 52px;
+  color: #E4E600;
+  margin: 0 0 16px 0;
+  letter-spacing: 2px;
+}
+
+.cta-subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 28px 0;
+  letter-spacing: 1px;
+}
+
+.cta-description {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #ffffff;
+  margin: 0 0 40px 0;
+  font-weight: 500;
+}
+
+/* CONTACT ボタン（テキスト完全中央配置） */
+.btn-partner-contact {
+  display: inline-flex;
+  justify-content: center; /* テキストを真ん中に配置 */
+  align-items: center;
+  position: relative;     /* 矢印を右端に配置するための基準 */
+  width: 320px;
+  height: 52px;
+  background-color: #E4E600;
+  color: #000000;
+  font-family: 'SexFace', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0 40px;        /* 左右余白を均等に保持 */
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-partner-contact:hover {
+  background-color: #ffff00;
+  transform: translateY(-2px);
+}
+
+/* 右端の矢印アイコン（文字中央を邪魔しないよう絶対配置） */
+.btn-partner-contact .arrow {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.btn-partner-contact:hover {
+  background-color: #ffff00;
+  transform: translateY(-2px);
+}
+
+.btn-partner-contact .arrow {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* --- レスポンシブ調整 --- */
+@media (max-width: 768px) {
+  .partners-hero-section .bg-text-outline {
+    font-size: 50px;
+  }
+  .partners-hero-section .section-title {
+    font-size: 36px;
+  }
+  .partners-grid-top {
+    gap: 20px;
+  }
+  .partner-item.large {
+    width: 120px;
+    height: 80px;
+  }
+  .partner-item.small {
+    width: 80px;
+    height: 60px;
+  }
+  .cta-description br {
+    display: none;
+  }
+}
+
+/* =========================================================
+   INDEX レスポンシブ対応
+   ========================================================= */
+
+/* -----------------------------------------
+   タブレット
+   769px ～ 1199px
+----------------------------------------- */
+@media screen and (max-width: 1199px) {
+
+  /* =========================
+     HEADER
+  ========================= */
+
+  .header-inner {
+    padding: 0 40px;
+  }
+
+  .logo {
+    margin-right: 60px;
+  }
+
+  .nav-menu ul {
+    gap: 25px;
+  }
+
+  .nav-menu a {
+    font-size: 18px;
+  }
+
+  .btn-store {
+    width: 140px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+
+  /* =========================
+     MAIN VISUAL
+  ========================= */
+
+  .main-visual {
+    height: 650px;
+  }
+
+
+  /* =========================
+     SECTION TITLE
+  ========================= */
+
+  .section-title-wrap {
+    margin-top: 140px;
+    margin-bottom: 70px;
+  }
+
+  .bg-text {
+    font-size: 140px;
+  }
+
+  .section-title {
+    font-size: 60px;
+  }
+
+
+  /* =========================
+     NEWS
+  ========================= */
+
+  .news-grid {
+    grid-template-columns: repeat(2, minmax(0, 516px));
+    column-gap: 30px;
+    padding: 0 40px;
+  }
+
+  .news-card {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 516 / 367;
+  }
+
+  .card-image {
+    height: auto;
+    aspect-ratio: 516 / 280;
+  }
+
+  .card-content {
+    height: auto;
+    min-height: 87px;
+  }
+
+
+  /* =========================
+     ABOUT
+  ========================= */
+
+  .about-logo img {
+    width: min(780px, 80%);
+  }
+
+  .about-text {
+    padding: 0 40px;
+    font-size: 16px;
+  }
+
+
+  /* =========================
+     FOOTER
+  ========================= */
+
+  .footer-inner,
+  .footer-container,
+  .footer-inner-1144 {
+    padding: 0 40px !important;
+  }
+
+}
+
+
+/* =========================================================
+   スマートフォン
+   768px以下
+========================================================= */
+
+@media screen and (max-width: 768px) {
+
+  /* =========================
+     HEADER
+  ========================= */
+
+  .site-header {
+    height: 64px;
+  }
+
+  .header-inner {
+    height: 64px;
+    padding: 0 16px;
+  }
+
+  .logo {
+    margin-right: 0;
+  }
+
+  .logo img {
+    height: 30px;
+  }
+
+  /* PC用ナビゲーションを非表示 */
+  .nav-menu {
+    display: none;
+  }
+
+  /* STORE */
+  .btn-store {
+    width: 105px;
+    height: 36px;
+    margin-left: auto;
+    gap: 6px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+
+  .store-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+
+  /* =========================
+     MAIN VISUAL
+  ========================= */
+
+  .main-visual {
+    width: 100%;
+    height: 420px;
+    margin-top: 0;
+
+    background-position: center center;
+  }
+
+
+  /* =========================
+     SECTION CONTAINER
+  ========================= */
+
+  .section-container {
+    width: 100%;
+    padding: 0 16px 70px;
+  }
+
+
+  /* =========================
+     SECTION TITLE
+  ========================= */
+
+  .section-title-wrap {
+    margin-top: 100px;
+    margin-bottom: 50px;
+    min-height: 80px;
+  }
+
+  .bg-text {
+    font-size: 60px;
+    letter-spacing: 0.08em;
+  }
+
+  .section-title {
+    font-size: 38px;
+    letter-spacing: 0.08em;
+  }
+
+
+  /* =========================
+     NEWS GRID
+  ========================= */
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    width: 100%;
+    padding: 0;
+    margin: 0 auto 40px;
+  }
+
+  .news-card {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 516 / 367;
+  }
+
+  .card-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 516 / 280;
+  }
+
+  .card-image img {
+    max-width: 60%;
+    max-height: 100px;
+  }
+
+  .card-content {
+    width: 100%;
+    height: auto;
+    min-height: 70px;
+    padding: 10px 14px;
+  }
+
+  .news-title {
+    font-size: 13px;
+  }
+
+  .news-date {
+    font-size: 11px;
+  }
+
+
+  /* =========================
+     MORE BUTTON
+  ========================= */
+
+  .btn-more {
+    width: 260px;
+    height: 58px;
+    font-size: 18px;
+  }
+
+  .btn-more .arrow-icon {
+    right: 18px;
+    width: 5px;
+    height: 12px;
+  }
+
+
+  /* =========================
+     ABOUT
+  ========================= */
+
+  #about {
+    width: 100%;
+  }
+
+  .about-content {
+    margin-bottom: 35px;
+  }
+
+  .about-logo {
+    margin-bottom: 25px;
+  }
+
+  .about-logo img {
+    width: 85%;
+    max-width: 500px;
+    height: auto;
+  }
+
+  .about-text {
+    padding: 0 5px;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 2;
+    letter-spacing: 0.08em;
+
+    text-align: center;
+  }
+
+
+  /* =========================
+     FOOTER
+  ========================= */
+
+  footer,
+  .site-footer {
+    padding: 30px 0 !important;
+  }
+
+  .footer-inner,
+  .footer-container,
+  .footer-inner-1144 {
+    width: 100% !important;
+    padding: 0 20px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    gap: 20px;
+  }
+
+  .footer-nav,
+  .footer-links {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    align-items: center !important;
+  }
+
+  .footer-nav a,
+  .footer-links a {
+    font-size: 13px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .copyright,
+  .footer-copyright {
+    font-size: 11px !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+
+}
+
+
+/* =========================================================
+   小さいスマートフォン
+   480px以下
+========================================================= */
+
+@media screen and (max-width: 480px) {
+
+  /* HEADER */
+
+  .site-header {
+    height: 58px;
+  }
+
+  .header-inner {
+    height: 58px;
+    padding: 0 12px;
+  }
+
+  .logo img {
+    height: 26px;
+  }
+
+  .btn-store {
+    width: 90px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .store-icon {
+    width: 13px;
+    height: 13px;
+  }
+
+
+  /* MAIN VISUAL */
+
+  .main-visual {
+    height: 320px;
+  }
+
+
+  /* TITLE */
+
+  .section-title-wrap {
+    margin-top: 80px;
+    margin-bottom: 40px;
+  }
+
+  .bg-text {
+    font-size: 48px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+
+  /* NEWS */
+
+  .news-grid {
+    gap: 18px;
+  }
+
+  .news-card {
+    aspect-ratio: 516 / 367;
+  }
+
+  .card-image img {
+    max-height: 80px;
+  }
+
+
+  /* ABOUT */
+
+  .about-logo img {
+    width: 90%;
+  }
+
+  .about-text {
+    font-size: 13px;
+    line-height: 2;
+    letter-spacing: 0.04em;
+  }
+
+
+  /* MORE */
+
+  .btn-more {
+    width: 230px;
+    height: 54px;
+    font-size: 16px;
+  }
+
+}
+
+/* =========================================================
+   スマホ ハンバーガーメニュー
+========================================================= */
+
+/* -----------------------------------------
+   ハンバーガーボタン
+----------------------------------------- */
+
+.hamburger {
+  display: none;
+
+  width: 40px;
+  height: 40px;
+
+  margin-left: 10px;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  z-index: 1100;
+}
+
+.hamburger span {
+  display: block;
+
+  width: 24px;
+  height: 2px;
+
+  background-color: #000000;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+
+/* -----------------------------------------
+   スマホ用メニュー本体
+----------------------------------------- */
+
+.mobile-menu {
+  position: fixed;
+
+  top: 0;
+  right: 0;
+
+  width: 100%;
+  height: 100vh;
+
+  background-color: #212121;
+
+  z-index: 1050;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateX(100%);
+
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+
+/* メニュー表示時 */
+
+.mobile-menu.active {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateX(0);
+}
+
+
+/* -----------------------------------------
+   閉じるボタン
+----------------------------------------- */
+
+.mobile-menu-close {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+
+
+.mobile-menu-close span:first-child {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+
+.mobile-menu-close span:last-child {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+/* -----------------------------------------
+   メニュー項目
+----------------------------------------- */
+
+.mobile-nav {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 32px;
+}
+
+
+.mobile-nav a {
+  font-family: 'SexFace', sans-serif;
+
+  font-size: 30px;
+
+  color: #E4E600;
+
+  letter-spacing: 0.1em;
+
+  transition: opacity 0.2s ease;
+}
+
+
+.mobile-nav a:hover {
+  opacity: 0.6;
+}
+
+
+/* -----------------------------------------
+   スマホのみ有効
+----------------------------------------- */
+
+@media screen and (max-width: 768px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+}
+
+/* ==========================================
+   ハンバーガーメニュー
+========================================== */
+
+/* ハンバーガーはPCでは非表示 */
+.hamburger {
+  display: none;
+}
+
+/* スマホ用メニューもPCでは非表示 */
+.mobile-menu {
+  display: none;
+}
+
+
+/* ==========================================
+   スマホ
+========================================== */
+
+@media (max-width: 768px) {
+
+  /* ヘッダー */
+  .site-header {
+    height: 70px;
+  }
+
+  .header-inner {
+    padding: 0 20px;
+    justify-content: space-between;
+  }
+
+  /* ロゴ */
+  .logo {
+    margin-right: 0;
+  }
+
+  .logo img {
+    height: 32px;
+  }
+
+  /* PCナビを非表示 */
+  .nav-menu {
+    display: none;
+  }
+
+  /* STOREの元ボタンは非表示 */
+  .btn-store {
+    display: none;
+  }
+
+  /* ハンバーガーボタン */
+  .hamburger {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 6px;
+
+    z-index: 1002;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: #000000;
+    transition: all 0.3s ease;
+  }
+
+  /* 開いたときの× */
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* モバイルメニュー */
+  .mobile-menu {
+    display: flex;
+    position: fixed;
+    top: 70px;
+    right: 0;
+
+    width: 100%;
+    height: calc(100vh - 70px);
+
+    background-color: #212121;
+
+    flex-direction: column;
+    align-items: center;
+
+    padding: 60px 20px;
+
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+
+    z-index: 1001;
+  }
+
+  /* メニューOPEN */
+  .mobile-menu.active {
+    transform: translateX(0);
+  }
+
+  /* メニューリンク */
+  .mobile-nav {
+    width: 100%;
+  }
+
+  .mobile-nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .mobile-nav a {
+    font-family: 'SexFace', sans-serif;
+    font-size: 28px;
+    color: #E4E600;
+    letter-spacing: 0.1em;
+  }
+
+  /* STORE */
+.mobile-store {
+  width: 220px;
+  height: 55px;
+
+  margin-top: 50px;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  background-color: #E4E600 !important;
+  color: #000000 !important;
+
+  font-family: 'SexFace', sans-serif !important;
+  font-size: 20px !important;
+  letter-spacing: 0.08em;
+
+  text-decoration: none;
+}
+
+.mobile-store span {
+  display: block !important;
+  color: #000000 !important;
+  font-family: 'SexFace', sans-serif !important;
+  font-size: 20px !important;
+}
+
+.mobile-store .store-icon {
+  width: 18px;
+  height: 18px;
+  fill: #000000 !important;
+}
+
+/* =========================================
+   ABOUT RESPONSIVE
+   ========================================= */
+
+/* タブレット */
+@media (max-width: 1024px) {
+
+  .about-page {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .about-hero-section {
+    padding: 100px 30px 80px;
+  }
+
+  .about-card {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .about-card-body {
+    padding: 50px 45px;
+  }
+
+  .management-section {
+    padding: 80px 30px;
+  }
+
+  .management-member-card {
+    gap: 30px;
+  }
+
+  .management-photo-wrap {
+    width: 35%;
+  }
+
+  .management-info-wrap {
+    width: 65%;
+  }
+
+  .why-yachimata-section {
+    padding: 80px 30px;
+  }
+
+  .why-cards-container {
+    padding: 0 30px;
+    gap: 20px;
+  }
+
+  .why-card {
+    padding: 30px 25px;
+  }
+
+  .vision-section {
+    padding: 80px 30px;
+  }
+
+  .team-section {
+    padding: 80px 30px;
+  }
+
+  .team-content {
+    gap: 50px;
+  }
+}
+
+
+/* =========================================
+   スマートフォン
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  /* ページ全体 */
+  .about-page {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* -----------------------------------------
+     ABOUT HERO
+     ----------------------------------------- */
+
+  .about-hero-section {
+    padding: 80px 20px 60px;
+  }
+
+  .section-title-wrap {
+    text-align: center;
+  }
+
+  .bg-text {
+    font-size: clamp(60px, 18vw, 110px);
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  .about-card {
+    width: 100%;
+    margin-top: 35px;
+  }
+
+  .about-card-body {
+    padding: 35px 25px;
+  }
+
+  .about-card-text {
+    font-size: 14px;
+    line-height: 2;
+    margin-bottom: 25px;
+  }
+
+  .about-card-text.highlight {
+    font-size: 17px;
+    line-height: 1.8;
+    margin-top: 35px;
+  }
+
+  .about-signature {
+    margin-top: 40px;
+  }
+
+  .signature-pic {
+    max-width: 180px;
+  }
+
+  .signature-name {
+    font-size: 13px;
+  }
+
+
+  /* -----------------------------------------
+     MANAGEMENT TEAM
+     ----------------------------------------- */
+
+  .management-section {
+    padding: 65px 20px;
+  }
+
+  .management-title {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .management-members-container {
+    margin-top: 40px;
+  }
+
+  .management-member-card {
+    display: block;
+    margin-bottom: 55px;
+  }
+
+  .management-photo-wrap {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto 30px;
+  }
+
+  .management-photo {
+    width: 100%;
+    height: auto;
+  }
+
+  .management-info-wrap {
+    width: 100%;
+  }
+
+  .management-header-row {
+    align-items: flex-start;
+  }
+
+  .management-role {
+    font-size: 12px;
+  }
+
+  .management-name-en {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .management-name-jp {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .management-sns-icon {
+    flex-shrink: 0;
+  }
+
+  .management-bio {
+    margin-top: 25px;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+
+  /* -----------------------------------------
+     WHY YACHIMATA
+     ----------------------------------------- */
+
+  .why-yachimata-section {
+    padding: 65px 20px 30px;
+  }
+
+  .why-yachimata-title {
+    font-size: 28px;
+  }
+
+  .why-yachimata-sub {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .why-yachimata-graphic {
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .why-graphic-img {
+    width: 100%;
+    height: auto;
+  }
+
+  .why-yachimata-content {
+    width: 100%;
+  }
+
+
+  /* -----------------------------------------
+     WHY 3 CARDS
+     ----------------------------------------- */
+
+  .why-cards-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    gap: 15px;
+  }
+
+  .why-card {
+    width: 100%;
+    padding: 25px 22px;
+  }
+
+  .why-card-header {
+    display: block;
+  }
+
+  .why-card-label-wrap {
+    margin-bottom: 12px;
+  }
+
+  .why-card-num {
+    font-size: 12px;
+  }
+
+  .why-card-label {
+    font-size: 11px;
+  }
+
+  .why-card-title {
+    font-size: 20px;
+    margin-top: 8px;
+  }
+
+  .why-card-text {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-top: 18px;
+  }
+
+
+  /* -----------------------------------------
+     VISION
+     ----------------------------------------- */
+
+  .vision-section {
+    padding: 65px 20px;
+  }
+
+  .vision-box {
+    padding: 45px 25px;
+  }
+
+  .vision-tag {
+    font-size: 13px;
+  }
+
+  .vision-catch {
+    font-size: clamp(22px, 6vw, 32px);
+    line-height: 1.7;
+  }
+
+
+  /* -----------------------------------------
+     TEAM
+     ----------------------------------------- */
+
+  .team-section {
+    padding: 65px 20px;
+  }
+
+  .team-title {
+    font-size: 28px;
+  }
+
+  .team-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 40px;
+  }
+
+  .team-logo-block {
+    width: 100%;
+    text-align: center;
+  }
+
+  .team-logo-img {
+    width: 70%;
+    max-width: 280px;
+  }
+
+  .team-info-list {
+    width: 100%;
+  }
+
+  .team-info-row {
+    display: flex;
+    flex-direction: column;
+    padding: 18px 0;
+    gap: 7px;
+  }
+
+  .team-info-row dt {
+    font-size: 12px;
+  }
+
+  .team-info-row dd {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+
+  /* -----------------------------------------
+     FOOTER
+     ----------------------------------------- */
+
+  .site-footer {
+    padding: 40px 20px;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .footer-links a {
+    font-size: 11px;
+  }
+
+  .copyright {
+    text-align: center;
+    font-size: 9px;
+    margin-top: 30px;
+  }
+}
+
+
+/* =========================================
+   小さいスマートフォン
+   ========================================= */
+
+@media (max-width: 480px) {
+
+  .about-hero-section {
+    padding: 65px 15px 50px;
+  }
+
+  .about-card-body {
+    padding: 30px 20px;
+  }
+
+  .about-card-text {
+    font-size: 13px;
+  }
+
+  .management-section,
+  .why-yachimata-section,
+  .vision-section,
+  .team-section {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .why-cards-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .management-name-en {
+    font-size: 19px;
+  }
+
+  .management-bio {
+    font-size: 12px;
+  }
+
+  .vision-box {
+    padding: 35px 20px;
+  }
+
+  .vision-catch {
+    font-size: 21px;
+  }
+
+  .team-info-row dd {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .about-card-body {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .about-card-text {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 768px) {
+  .why-cards-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    gap: 20px;
+  }
+
+  .why-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .about-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .vision-section,
+  .team-section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .about-card {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .about-card-body {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-sizing: border-box;
+  }
+
+  .about-card-text {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .management-photo-wrap {
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    overflow: hidden;
+  }
+
+  .management-photo {
+    display: block;
+    width: 100%;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .vision-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    box-sizing: border-box;
+    overflow: visible;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .vision-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .vision-catch {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .team-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .team-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .team-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .team-logo-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+
+  .team-logo-img {
+    display: block !important;
+    width: 50% !important;
+    max-width: 200px !important;
+    min-width: 0 !important;
+    height: auto !important;
+    object-fit: contain !important;
+    box-sizing: border-box !important;
+  }
+
+}
+
+/* =========================================
+   ABOUTページ スマホレスポンシブ調整
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+
+  /* -------------------------
+     ABOUT 白カード
+     ------------------------- */
+  .about-card {
+    width: calc(100% - 32px);
+    max-width: none;
+    height: auto !important;
+    min-height: 0 !important;
+    box-sizing: border-box;
+    margin: 0 auto;
+    overflow: visible !important;
+  }
+
+  .about-card-body {
+    height: auto !important;
+    min-height: 0 !important;
+    box-sizing: border-box;
+    padding: 32px 24px !important;
+  }
+
+  .about-card-text {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    line-height: 1.9;
+  }
+
+
+  /* -------------------------
+     MANAGEMENT TEAM
+     ------------------------- */
+  .management-section {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .management-members-container {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .management-member-card {
+    width: calc(100% - 32px);
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .management-photo-wrap {
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .management-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .management-info-wrap {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+
+  /* -------------------------
+     WHY YACHIMATA
+     ------------------------- */
+  .why-yachimata-section {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .why-yachimata-content {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .why-cards-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .why-card {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+  }
+
+
+  /* -------------------------
+     VISION
+     ------------------------- */
+  .vision-section {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 40px 16px !important;
+    overflow: hidden;
+  }
+
+  .vision-box {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 40px 24px !important;
+  }
+
+  .vision-catch {
+    font-size: clamp(24px, 7vw, 40px);
+    line-height: 1.5;
+    word-break: keep-all;
+  }
+
+
+  /* -------------------------
+     TEAM
+     ------------------------- */
+  .team-section {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .team-container {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    padding: 0 16px !important;
+  }
+
+  .team-content {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* 左側ロゴ */
+  .team-logo-block {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .team-logo-img {
+    width: 70% !important;
+    max-width: 280px !important;
+    height: auto !important;
+    max-height: 250px !important;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* 右側情報 */
+  .team-info-list {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .team-info-row {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .team-info-row dt,
+  .team-info-row dd {
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .team-link {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+}
+
+
+/* =========================================
+   さらに狭いスマホ
+   ========================================= */
+
+@media screen and (max-width: 480px) {
+
+  .about-card {
+    width: calc(100% - 24px);
+  }
+
+  .about-card-body {
+    padding: 28px 20px !important;
+  }
+
+  .about-card-text {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .management-member-card {
+    width: calc(100% - 24px);
+  }
+
+  .management-bio {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .vision-section {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .vision-box {
+    padding: 32px 18px !important;
+  }
+
+  .vision-catch {
+    font-size: 22px;
+  }
+
+  .team-container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .team-logo-img {
+    width: 60% !important;
+    max-width: 220px !important;
+  }
+
+  .team-info-row {
+    grid-template-columns: 75px minmax(0, 1fr);
+    gap: 8px;
+    font-size: 14px;
+  }
+}
+
+/* ==========================================
+   タブレット対応
+   768px ～ 1024px
+========================================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* 全体の横はみ出し防止 */
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* ------------------------------
+     ヘッダー
+  ------------------------------ */
+  .header-inner {
+    width: 100%;
+    padding: 0 30px;
+    box-sizing: border-box;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .btn-store {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+  }
+
+  /* ------------------------------
+     ABOUT
+  ------------------------------ */
+  .about-page {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .about-card {
+    width: calc(100% - 80px);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  .about-card-body {
+    padding: 50px 55px;
+    box-sizing: border-box;
+  }
+
+  .about-card-text {
+    font-size: 16px;
+    line-height: 2;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  /* ------------------------------
+     MANAGEMENT TEAM
+  ------------------------------ */
+  .management-section {
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+  }
+
+  .management-members-container {
+    width: 100%;
+  }
+
+  .management-member-card {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  .management-photo-wrap {
+    flex-shrink: 0;
+  }
+
+  .management-photo {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .management-info-wrap {
+    min-width: 0;
+  }
+
+  .management-bio {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  /* ------------------------------
+     WHY YACHIMATA
+  ------------------------------ */
+  .why-yachimata-section {
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+  }
+
+  .why-yachimata-graphic {
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .why-graphic-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .why-cards-container {
+    width: calc(100% - 80px);
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+
+    /* 3枚を無理に横並びにしない */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .why-card {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .why-card-text {
+    overflow-wrap: break-word;
+  }
+
+  /* 3枚目を中央寄せ */
+  .why-card:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: calc(50% - 10px);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ------------------------------
+     VISION
+  ------------------------------ */
+  .vision-section {
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+  }
+
+  .vision-box {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  .vision-catch {
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.5;
+  }
+
+  /* ------------------------------
+     TEAM
+  ------------------------------ */
+  .team-section {
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+  }
+
+  .team-container {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  .team-content {
+    width: 100%;
+    gap: 40px;
+  }
+
+  .team-logo-block {
+    width: 40%;
+    min-width: 0;
+  }
+
+  .team-logo-img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .team-info-list {
+    width: 60%;
+    min-width: 0;
+  }
+
+  .team-info-row {
+    min-width: 0;
+  }
+
+  .team-info-row dd {
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  /* ------------------------------
+     フッター
+  ------------------------------ */
+  .footer-inner-1144 {
+    width: calc(100% - 60px);
+    max-width: 1144px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+}
+
+/* ==========================================
+   タブレット・中間サイズの横はみ出し対策
+========================================== */
+
+@media (min-width: 768px) and (max-width: 1100px) {
+
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* =========================
+     ABOUT
+  ========================= */
+  .about-page {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .about-hero-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .about-card {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-card-body {
+    width: 100%;
+    max-width: 100%;
+    padding: 45px 40px;
+  }
+
+  .about-card-text {
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+
+  /* =========================
+     MANAGEMENT TEAM
+  ========================= */
+  .management-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    overflow: hidden;
+  }
+
+  .management-members-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .management-member-card {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .management-info-wrap {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .management-bio {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+
+  /* =========================
+     WHY YACHIMATA
+  ========================= */
+  .why-yachimata-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    overflow: hidden;
+  }
+
+  .why-yachimata-graphic {
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .why-graphic-img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+
+  /* =========================
+     3枚のカード
+  ========================= */
+  .why-cards-container {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding-left: 30px;
+    padding-right: 30px;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    overflow: hidden;
+  }
+
+  .why-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .why-card-text {
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .why-card:nth-child(3) {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: calc(50% - 10px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  /* =========================
+     VISION
+  ========================= */
+  .vision-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    overflow: hidden;
+  }
+
+  .vision-box {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vision-catch {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+
+  /* =========================
+     TEAM
+  ========================= */
+  .team-section {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    overflow: hidden;
+  }
+
+  .team-container {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .team-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .team-logo-block {
+    min-width: 0;
+    max-width: 40%;
+  }
+
+  .team-logo-img {
+    display: block;
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .team-info-list {
+    min-width: 0;
+    max-width: 60%;
+  }
+
+  .team-info-row {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .team-info-row dd {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+
+  /* =========================
+     FOOTER
+  ========================= */
+  .site-footer {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .footer-inner-1144 {
+    width: 100%;
+    max-width: 1144px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+/* ==========================================
+   レスポンシブ：タブレット〜スマホ共通
+   横方向へのはみ出し防止
+========================================== */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.about-page {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* 各セクションが画面幅を超えないようにする */
+.about-hero-section,
+.management-section,
+.why-yachimata-section,
+.why-cards-container,
+.vision-section,
+.team-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ABOUT 白カード */
+.about-card {
+  width: calc(100% - 40px);
+  max-width: 1144px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.about-card-body {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.about-card-text {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+  box-sizing: border-box;
+}
+
+/* 3枚のカード */
+.why-cards-container {
+  width: 100%;
+  max-width: 1144px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.why-card {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* VISION */
+.vision-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.vision-box {
+  max-width: 1144px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* TEAM */
+.team-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.team-container {
+  width: 100%;
+  max-width: 1144px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.team-content {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.team-logo-block,
+.team-info-list {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.team-logo-img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================
+   タブレット
+   769px ～ 1100px
+========================================== */
+
+@media (min-width: 769px) and (max-width: 1100px) {
+
+  .about-card {
+    width: calc(100% - 48px);
+  }
+
+  .management-members-container {
+    width: calc(100% - 48px);
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  .why-cards-container {
+    width: calc(100% - 48px);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .vision-section,
+  .team-section {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .team-content {
+    gap: 30px;
+  }
+
+  .team-logo-block {
+    max-width: 40%;
+  }
+
+  .team-info-list {
+    max-width: 60%;
+  }
+}
+
+.about-card-body {
+  padding: 40px 45px;
+}
+
+@media (max-width: 768px) {
+  .about-card-body {
+    padding: 30px 25px;
+  }
+}
+
+/* ABOUTカード内の余白を強制調整 */
+.about-card .about-card-body {
+  padding: 40px 45px !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1100px) {
+  .about-card .about-card-body {
+    padding: 35px 35px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-card .about-card-body {
+    padding: 1px 1px !important;
+  }
+}
+
+
+
+
+
+.vision-tag {
+  position: relative;
+  z-index: 4;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .vision-section {
+    min-height: 220px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .vision-tag {
+    font-size: 30px;
+  }
+}
+
+/* =========================================
+   FIRST VIEW RESPONSIVE
+========================================= */
+
+@media (max-width: 1024px) {
+  .main-visual {
+    min-height: 500px;
+  }
+
+  .main-visual img {
+    width: min(65vw, 520px);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-visual {
+    height: 100svh;
+    min-height: 500px;
+  }
+
+  .main-visual img {
+    width: 75vw;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-visual {
+    height: 100svh;
+    min-height: 480px;
+  }
+
+  .main-visual img {
+    width: 78vw;
+    max-width: 360px;
+  }
+}
+
+/* =========================================
+   MEMBERS レスポンシブ
+   ========================================= */
+
+/* タブレット */
+@media (max-width: 1024px) {
+
+  .members-page {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .filter-section {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .filter-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  .filter-btn {
+    flex: 0 1 auto;
+    white-space: nowrap;
+  }
+
+  .members-grid-section {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .members-grid {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .pagination-section {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+}
+
+
+/* スマホ */
+@media (max-width: 767px) {
+
+  .members-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* MEMBERSタイトル */
+  .members-page .section-title-wrap {
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .members-page .section-title {
+    font-size: 32px;
+  }
+
+  .members-page .bg-text {
+    font-size: 64px;
+  }
+
+
+  /* フィルター */
+  .filter-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .filter-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .filter-btn {
+    font-size: 12px;
+    padding: 10px 14px;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+
+  /* メンバーカード */
+  .members-grid-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .members-grid {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .members-grid > * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+
+  /* カード内画像 */
+  .members-grid img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+
+  /* カード内テキスト */
+  .members-grid h3,
+  .members-grid h4,
+  .members-grid p,
+  .members-grid span {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+
+  /* ページネーション */
+  .pagination-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .pagination {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+}
+
+/* =========================================================
+   MEMBERS RESPONSIVE
+   ========================================================= */
+
+/* -------------------------
+   タブレット
+------------------------- */
+@media (max-width: 1024px) {
+
+  .members-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* フィルター */
+  .filter-section {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .filter-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  .filter-btn {
+    flex: 0 0 auto;
+  }
+
+  /* メンバーカード */
+  .members-grid-section {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .members-grid {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .member-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card-inner {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .card-left,
+  .card-right {
+    min-width: 0;
+  }
+
+  .card-photo,
+  .card-logo {
+    max-width: 100%;
+  }
+
+  .member-name {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .member-division {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* ページネーション */
+  .pagination-section {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  .pagination {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+
+/* -------------------------
+   スマートフォン
+------------------------- */
+@media (max-width: 767px) {
+
+  .members-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* MEMBERSタイトル */
+  .members-page .section-title-wrap {
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .members-page .bg-text,
+  .members-page .section-title {
+    max-width: 100%;
+  }
+
+  /* フィルター */
+  .filter-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .filter-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .filter-btn {
+    font-size: 12px;
+    padding: 9px 12px;
+    white-space: nowrap;
+  }
+
+  /* カード */
+  .members-grid-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .members-grid {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .member-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card-inner {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card-left,
+  .card-right {
+    min-width: 0;
+  }
+
+  /* 写真 */
+  .card-photo,
+  .card-logo {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 名前 */
+  .member-name {
+    font-size: 20px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .member-division {
+    font-size: 11px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* ページネーション */
+  .pagination-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .pagination {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+
+/* -------------------------
+   小さいスマホ
+------------------------- */
+@media (max-width: 480px) {
+
+  .filter-section {
+    padding: 0 12px;
+  }
+
+  .filter-container {
+    gap: 6px;
+  }
+
+  .filter-btn {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .members-grid-section {
+    padding: 0 12px;
+  }
+
+  .members-grid {
+    gap: 14px;
+  }
+
+  .member-name {
+    font-size: 18px;
+  }
+
+  .member-division {
+    font-size: 10px;
+  }
+
+  .pagination-section {
+    padding: 0 12px;
+  }
+}
+
+/* =========================================================
+   MEMBERS - RESPONSIVE
+   横長カードを維持したままレスポンシブ対応
+   ========================================================= */
+
+/* タブレット */
+@media (max-width: 1024px) {
+
+  .members-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  /* フィルター */
+  .filter-section {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .filter-container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    box-sizing: border-box;
+  }
+
+  /* カード */
+  .members-grid-section {
+    width: 100%;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  .members-grid {
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .member-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card-inner {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card-left,
+  .card-right {
+    min-width: 0;
+  }
+
+  .card-left img {
+    max-width: 100%;
+  }
+
+  .member-name,
+  .member-division {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+
+/* スマホ */
+@media (max-width: 767px) {
+
+  .members-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  /* MEMBERSタイトル */
+  .members-page .section-title-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  /* フィルター */
+  .filter-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .filter-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+
+  .filter-btn {
+    flex: 0 0 auto;
+    max-width: 100%;
+    font-size: 12px;
+    padding: 9px 12px;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+  /* =========================
+     メンバーカード
+     横長のまま1列にする
+     ========================= */
+
+  .members-grid-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .members-grid {
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    box-sizing: border-box;
+  }
+
+  .member-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .card-inner {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* 左右の構造を維持 */
+  .card-left,
+  .card-right {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* 画像がカードから飛び出さないようにする */
+  .card-left img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* 名前が長くてもカードから飛び出さない */
+  .member-name {
+    max-width: 100%;
+    font-size: 20px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .member-division {
+    max-width: 100%;
+    font-size: 11px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* ページネーション */
+  .pagination-section {
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .pagination {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    box-sizing: border-box;
+  }
+}
+
+
+/* 小さいスマホ */
+@media (max-width: 480px) {
+
+  .filter-section {
+    padding: 0 12px;
+  }
+
+  .members-grid-section {
+    padding: 0 12px;
+  }
+
+  .members-grid {
+    gap: 14px;
+  }
+
+  .member-name {
+    font-size: 18px;
+  }
+
+  .member-division {
+    font-size: 10px;
+  }
+
+  .pagination-section {
+    padding: 0 12px;
+  }
+}
+
+
+
+}
